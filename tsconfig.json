@@ -12,7 +12,6 @@
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false
   },
