@@ -25,7 +25,10 @@ export const AppDataSource = new DataSource({
   password: decodeURIComponent(dbUrl.password),
   database: dbUrl.pathname.slice(1),
   ssl: {
-    rejectUnauthorized: false,
+    rejectUnauthorized: false, // necessário para Supabase
+  },
+  extra: {
+    family: 4, // força IPv4 para evitar ENETUNREACH em produção
   },
   synchronize: false, // true apenas em dev
   logging: true,
