@@ -15,7 +15,7 @@
     "moduleResolution": "node10",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
-    "ignoreDeprecations": "6.0"
+    "ignoreDeprecations": "6.4"
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
