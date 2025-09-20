@@ -15,6 +15,10 @@ import { ResultadoUsuario } from "./entities/ResultadoUsuario";
 
 dotenv.config();
 
+// Detecta se estamos rodando em produção (JS) ou dev (TS)
+const isProd = process.env.NODE_ENV === "production";
+
+// URL do banco
 const dbUrl = new URL(process.env.DATABASE_URL!);
 
 export const AppDataSource = new DataSource({
@@ -32,19 +36,22 @@ export const AppDataSource = new DataSource({
   },
   synchronize: false, // true apenas em dev
   logging: true,
-  entities: [
-    Usuario,
-    CategoriaGasto,
-    Gasto,
-    Investimento,
-    TipoInvestimento,
-    Formulario,
-    Pergunta,
-    Opcao,
-    RespostaUsuario,
-    PerfilInvestidor,
-    ResultadoUsuario,
-  ],
+  // Define as entidades de forma dinâmica
+  entities: isProd
+    ? [__dirname + "/entities/*.js"] // JS compilado no dist
+    : [
+        Usuario,
+        CategoriaGasto,
+        Gasto,
+        Investimento,
+        TipoInvestimento,
+        Formulario,
+        Pergunta,
+        Opcao,
+        RespostaUsuario,
+        PerfilInvestidor,
+        ResultadoUsuario,
+      ],
   migrations: [],
   subscribers: [],
 });
