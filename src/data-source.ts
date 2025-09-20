@@ -26,12 +26,11 @@ const dbUrl = new URL(process.env.DATABASE_URL);
 export const AppDataSource = new DataSource({
   type: "postgres",
   host: dbUrl.hostname,
-  port: Number(dbUrl.port || 5432),
+  port: Number(dbUrl.port),
   username: dbUrl.username,
   password: decodeURIComponent(dbUrl.password),
   database: dbUrl.pathname.slice(1),
-  ssl: isProd ? { rejectUnauthorized: false } : false,
-  extra: { family: 4 }, // força IPv4
+  ssl: { rejectUnauthorized: false },
   synchronize: !isProd,
   logging: !isProd,
   entities: isProd
