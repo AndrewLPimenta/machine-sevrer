@@ -6,9 +6,12 @@ import { CategoriaGasto } from "../entities/CategoriaGasto";
 import { TipoInvestimento } from "../entities/TipoInvestimento";
 import { Investimento } from "../entities/Investimento";
 
-// Interface simplificada - extendendo Request diretamente
+// Interface que estende Request com userId - abordagem mais segura
 export interface AuthRequest extends Request {
   userId?: number;
+  body: any;
+  query: any;
+  params: any;
 }
 
 export const financeController = {
@@ -32,7 +35,10 @@ export const financeController = {
       });
       await repo.save(gasto);
 
-      const gastoFull = await repo.findOne({ where: { id: gasto.id }, relations: ["categoria"] });
+      const gastoFull = await repo.findOne({ 
+        where: { id: gasto.id }, 
+        relations: ["categoria"] 
+      });
 
       res.status(201).json({ success: true, data: gastoFull, message: "Gasto criado com sucesso" });
     } catch (error: any) {
@@ -89,7 +95,9 @@ export const financeController = {
       if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
 
       const repo = AppDataSource.getRepository(Gasto);
-      const existing = await repo.findOne({ where: { id: Number(id), idUsuario: userId } });
+      const existing = await repo.findOne({ 
+        where: { id: Number(id), idUsuario: userId } 
+      });
       if (!existing) return res.status(404).json({ success: false, message: "Gasto não encontrado" });
 
       repo.merge(existing, {
@@ -101,7 +109,10 @@ export const financeController = {
       });
       await repo.save(existing);
 
-      const gastoFull = await repo.findOne({ where: { id: existing.id }, relations: ["categoria"] });
+      const gastoFull = await repo.findOne({ 
+        where: { id: existing.id }, 
+        relations: ["categoria"] 
+      });
 
       res.json({ success: true, data: gastoFull, message: "Gasto atualizado com sucesso" });
     } catch (error: any) {
@@ -117,7 +128,9 @@ export const financeController = {
       if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
 
       const repo = AppDataSource.getRepository(Gasto);
-      const existing = await repo.findOne({ where: { id: Number(id), idUsuario: userId } });
+      const existing = await repo.findOne({ 
+        where: { id: Number(id), idUsuario: userId } 
+      });
       if (!existing) return res.status(404).json({ success: false, message: "Gasto não encontrado" });
 
       await repo.remove(existing);
@@ -154,7 +167,10 @@ export const financeController = {
       if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
 
       const repo = AppDataSource.getRepository(CategoriaGasto);
-      const categorias = await repo.find({ where: { idUsuario: userId }, order: { nome: "ASC" } });
+      const categorias = await repo.find({ 
+        where: { idUsuario: userId }, 
+        order: { nome: "ASC" } 
+      });
 
       res.json({ success: true, data: categorias });
     } catch (error: any) {
@@ -171,7 +187,9 @@ export const financeController = {
       if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
 
       const repo = AppDataSource.getRepository(CategoriaGasto);
-      const existing = await repo.findOne({ where: { id: Number(id), idUsuario: userId } });
+      const existing = await repo.findOne({ 
+        where: { id: Number(id), idUsuario: userId } 
+      });
       if (!existing) return res.status(404).json({ success: false, message: "Categoria não encontrada" });
 
       repo.merge(existing, { nome, descricao });
@@ -191,7 +209,9 @@ export const financeController = {
       if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
 
       const repo = AppDataSource.getRepository(CategoriaGasto);
-      const existing = await repo.findOne({ where: { id: Number(id), idUsuario: userId } });
+      const existing = await repo.findOne({ 
+        where: { id: Number(id), idUsuario: userId } 
+      });
       if (!existing) return res.status(404).json({ success: false, message: "Categoria não encontrada" });
 
       await repo.remove(existing);
@@ -228,7 +248,10 @@ export const financeController = {
       if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
 
       const repo = AppDataSource.getRepository(TipoInvestimento);
-      const tipos = await repo.find({ where: { idUsuario: userId }, order: { nome: "ASC" } });
+      const tipos = await repo.find({ 
+        where: { idUsuario: userId }, 
+        order: { nome: "ASC" } 
+      });
 
       res.json({ success: true, data: tipos });
     } catch (error: any) {
@@ -245,7 +268,9 @@ export const financeController = {
       if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
 
       const repo = AppDataSource.getRepository(TipoInvestimento);
-      const existing = await repo.findOne({ where: { id: Number(id), idUsuario: userId } });
+      const existing = await repo.findOne({ 
+        where: { id: Number(id), idUsuario: userId } 
+      });
       if (!existing) return res.status(404).json({ success: false, message: "Tipo de investimento não encontrado" });
 
       repo.merge(existing, { nome, descricao });
@@ -265,7 +290,9 @@ export const financeController = {
       if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
 
       const repo = AppDataSource.getRepository(TipoInvestimento);
-      const existing = await repo.findOne({ where: { id: Number(id), idUsuario: userId } });
+      const existing = await repo.findOne({ 
+        where: { id: Number(id), idUsuario: userId } 
+      });
       if (!existing) return res.status(404).json({ success: false, message: "Tipo de investimento não encontrado" });
 
       await repo.remove(existing);
@@ -295,7 +322,10 @@ export const financeController = {
       });
       await repo.save(investimento);
 
-      const investimentoFull = await repo.findOne({ where: { id: investimento.id }, relations: ["tipoInvestimento"] });
+      const investimentoFull = await repo.findOne({ 
+        where: { id: investimento.id }, 
+        relations: ["tipoInvestimento"] 
+      });
 
       res.status(201).json({ success: true, data: investimentoFull, message: "Investimento criado com sucesso" });
     } catch (error: any) {
@@ -352,7 +382,9 @@ export const financeController = {
       if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
 
       const repo = AppDataSource.getRepository(Investimento);
-      const existing = await repo.findOne({ where: { id: Number(id), idUsuario: userId } });
+      const existing = await repo.findOne({ 
+        where: { id: Number(id), idUsuario: userId } 
+      });
       if (!existing) return res.status(404).json({ success: false, message: "Investimento não encontrado" });
 
       repo.merge(existing, {
@@ -363,7 +395,10 @@ export const financeController = {
       });
       await repo.save(existing);
 
-      const investimentoFull = await repo.findOne({ where: { id: existing.id }, relations: ["tipoInvestimento"] });
+      const investimentoFull = await repo.findOne({ 
+        where: { id: existing.id }, 
+        relations: ["tipoInvestimento"] 
+      });
 
       res.json({ success: true, data: investimentoFull, message: "Investimento atualizado com sucesso" });
     } catch (error: any) {
@@ -379,7 +414,9 @@ export const financeController = {
       if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
 
       const repo = AppDataSource.getRepository(Investimento);
-      const existing = await repo.findOne({ where: { id: Number(id), idUsuario: userId } });
+      const existing = await repo.findOne({ 
+        where: { id: Number(id), idUsuario: userId } 
+      });
       if (!existing) return res.status(404).json({ success: false, message: "Investimento não encontrado" });
 
       await repo.remove(existing);
