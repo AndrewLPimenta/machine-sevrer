@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
@@ -17,18 +17,13 @@ import financeRoutes from "./routes/finance.routes";
 import chatRoutes from "./routes/ai.routes";
 import tipsRoutes from "./routes/tips.route";
 
-import { AppDataSource } from "./data-source";
-import { Usuario } from "./entities/Usuario";
-
 dotenv.config();
 
 const app = express();
-
-// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// --------------------- Rotas da aplicação ---------------------
+// Rotas
 app.use("/api/auth", authRoutes);
 app.use("/api/formulario", formRoutes);
 app.use("/api/respostas", answerRoutes);
@@ -44,7 +39,7 @@ app.use("/api", chatRoutes);
 app.post("/api/logout", logoutUser);
 app.use("/api/dicas", tipsRoutes);
 
-// --------------------- Rota padrão ---------------------
+// Rota padrão
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({
     message: "Servidor rodando com sucesso!",
@@ -52,20 +47,9 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-// --------------------- 404 para rotas não encontradas ---------------------
+// 404
 app.use((req: Request, res: Response) => {
   res.status(404).json({ message: "Rota não encontrada" });
 });
-
-// --------------------- Inicialização do TypeORM ---------------------
-AppDataSource.initialize()
-  .then(async () => {
-    console.log("Data Source initialized");
-
-    const repo = AppDataSource.getRepository(Usuario);
-    const users = await repo.find();
-    console.log("Usuarios encontrados:", users);
-  })
-  .catch((err) => console.error("Error during Data Source initialization", err));
 
 export default app;
