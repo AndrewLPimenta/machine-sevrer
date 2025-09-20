@@ -12,9 +12,10 @@
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",        // importante para Node.js e tipos de módulos
-    "allowSyntheticDefaultImports": true, // facilita importações de pacotes JS sem types
-    "noImplicitAny": false              // opcional: evita erros TS7016 para pacotes sem @types
+    "moduleResolution": "node10",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
