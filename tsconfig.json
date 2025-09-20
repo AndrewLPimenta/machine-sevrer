@@ -5,13 +5,13 @@
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,
-    "strictPropertyInitialization": false
-,
+    "strictPropertyInitialization": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "experimentalDecorators": true,   // ADICIONE ISSO
-    "emitDecoratorMetadata": true     // ADICIONE ISSO
+    "forceConsistentCasingInFileNames": true,   
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["src"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }
