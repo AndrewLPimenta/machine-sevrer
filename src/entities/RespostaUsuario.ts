@@ -21,14 +21,14 @@ export class RespostaUsuario {
   dataResposta: Date;
 
   @ManyToOne(() => Usuario, u => u.respostas)
-  @JoinColumn({ name: "idUsuario" }) // nome exato da coluna
+  @JoinColumn({ name: "idUsuario" })
   usuario: Usuario;
 
   @ManyToOne(() => Pergunta, p => p.respostas)
-  @JoinColumn({ name: "idPergunta" }) // nome exato da coluna
+  @JoinColumn({ name: "idPergunta" })
   pergunta: Pergunta;
 
   @ManyToOne(() => Opcao, o => o.respostas)
-  @JoinColumn({ name: "idOpcao" }) // nome exato da coluna
+  @JoinColumn({ name: "idOpcao" })
   opcao: Opcao;
 }

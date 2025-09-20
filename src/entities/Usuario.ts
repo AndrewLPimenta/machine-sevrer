@@ -6,7 +6,7 @@ import { RespostaUsuario } from "./RespostaUsuario";
 import { ResultadoUsuario } from "./ResultadoUsuario";
 import { TipoInvestimento } from "./TipoInvestimento";
 
-@Entity("Usuario") // tabela existe no Supabase
+@Entity("Usuario")
 export class Usuario {
   @PrimaryGeneratedColumn()
   id: number;
@@ -36,8 +36,7 @@ export class Usuario {
   respostas: RespostaUsuario[];
 
   @OneToOne(() => ResultadoUsuario, r => r.usuario)
-  resultados: ResultadoUsuario; // aqui não existe idResultado, só o relacionamento
-  
+  resultados: ResultadoUsuario;
 
   @OneToMany(() => TipoInvestimento, t => t.usuario)
   tiposInvestimento: TipoInvestimento[];

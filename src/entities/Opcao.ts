@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { Pergunta } from "./Pergunta";
 import { RespostaUsuario } from "./RespostaUsuario";
 
@@ -16,7 +16,8 @@ export class Opcao {
   @Column()
   idPergunta: number;
 
-  @ManyToOne(() => Pergunta, p => p.opcoes)
+  @ManyToOne(() => Pergunta, pergunta => pergunta.opcoes)
+  @JoinColumn({ name: "idPergunta" })
   pergunta: Pergunta;
 
   @OneToMany(() => RespostaUsuario, r => r.opcao)

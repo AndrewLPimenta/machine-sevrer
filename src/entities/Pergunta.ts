@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from "typeorm";
 import { Formulario } from "./Formulario";
 import { Opcao } from "./Opcao";
 import { RespostaUsuario } from "./RespostaUsuario";
@@ -15,9 +15,10 @@ export class Pergunta {
   idFormulario: number;
 
   @ManyToOne(() => Formulario, f => f.perguntas)
+  @JoinColumn({ name: "idFormulario" })
   formulario: Formulario;
 
-  @OneToMany(() => Opcao, o => o.pergunta)
+  @OneToMany(() => Opcao, o => o.pergunta, { cascade: true })
   opcoes: Opcao[];
 
   @OneToMany(() => RespostaUsuario, r => r.pergunta)

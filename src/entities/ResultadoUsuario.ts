@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, On
 import { PerfilInvestidor } from "./PerfilInvestidor";
 import { Usuario } from "./Usuario";
 
-@Entity("ResultadoUsuario") // nome da tabela no Supabase
+@Entity("ResultadoUsuario")
 export class ResultadoUsuario {
   @PrimaryGeneratedColumn()
   id: number;
@@ -24,6 +24,6 @@ export class ResultadoUsuario {
   perfil: PerfilInvestidor;
 
   @OneToOne(() => Usuario, u => u.resultados)
-  @JoinColumn({ name: "idUsuario" }) 
+  @JoinColumn({ name: "idUsuario" })
   usuario: Usuario;
 }
