@@ -22,12 +22,12 @@ export const AppDataSource = new DataSource({
   host: dbUrl.hostname,
   port: Number(dbUrl.port),
   username: dbUrl.username,
-  password: decodeURIComponent(dbUrl.password), // decodifica %40 -> @
+  password: decodeURIComponent(dbUrl.password),
   database: dbUrl.pathname.slice(1),
   ssl: {
-    rejectUnauthorized: false, // necessário para Supabase
+    rejectUnauthorized: false,
   },
-  synchronize: false, // true em dev
+  synchronize: false, // true apenas em dev
   logging: true,
   entities: [
     Usuario,
