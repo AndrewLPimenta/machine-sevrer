@@ -1,14 +1,13 @@
 {
   "name": "server-machine-invest",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000m\u0000a\u0000c\u0000h\u0000i\u0000n\u0000e\u0000-\u0000i\u0000n\u0000v\u0000e\u0000s\u0000t\u0000-\u0000b\u0000a\u0000c\u0000k\u0000\r\u0000 \u0000",
-  "main": "index.js",
+  "description": "machine-invest-back",
+  "main": "dist/server.js",
   "scripts": {
-  "dev": "nodemon --watch src/**/*.ts --exec npx ts-node src/server.ts",
-  "build": "tsc",
-  "start": "node dist/server.js"
-}
-,
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
