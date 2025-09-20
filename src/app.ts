@@ -45,7 +45,7 @@ app.use("/api/dicas", tipsRoutes);
 
 AppDataSource.initialize()
   .then(async () => {
-    document.writeln("Data Source initialized");
+    console.log("Data Source initialized");
 
     const repo = AppDataSource.getRepository(Usuario);
     const users = await repo.find();
