@@ -19,33 +19,32 @@ export const financeController = {
   // ======================
   // GASTOS
   // ======================
-async createExpense(req: AuthRequest, res: Response) {
-  try {
-    const { valor, descricao, idCategoria, tipoPeriodo, dataGasto } = req.body;
-    const userId = req.userId;
-    if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
+  async createExpense(req: AuthRequest, res: Response) {
+    try {
+      const { valor, descricao, idCategoria, tipoPeriodo, dataGasto } = req.body;
+      const userId = req.userId;
+      if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
 
-    const repo = AppDataSource.getRepository(Gasto);
-    const gasto = repo.create({
-      idUsuario: userId,
-      valor: parseFloat(valor),
-      descricao,
-      idCategoria: idCategoria ? Number(idCategoria) : undefined,
-      tipoPeriodo,
-      dataGasto: dataGasto ? new Date(dataGasto) : new Date(),
-    });
-    await repo.save(gasto);
+      const repo = AppDataSource.getRepository(Gasto);
+      const gasto = repo.create({
+        idUsuario: userId,
+        valor: parseFloat(valor),
+        descricao,
+        idCategoria: idCategoria ? Number(idCategoria) : undefined,
+        tipoPeriodo,
+        dataGasto: dataGasto ? new Date(dataGasto) : new Date(),
+      });
+      await repo.save(gasto);
 
-    const gastoFull = await repo.findOne({ where: { id: gasto.id }, relations: ["categoria"] });
+      const gastoFull = await repo.findOne({ where: { id: gasto.id }, relations: ["categoria"] });
 
-    res.status(201).json({ success: true, data: gastoFull, message: "Gasto criado com sucesso" });
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).json({ success: false, message: error.message });
-  }
-}
+      res.status(201).json({ success: true, data: gastoFull, message: "Gasto criado com sucesso" });
+    } catch (error: any) {
+      console.error(error);
+      res.status(500).json({ success: false, message: error.message });
+    }
+  },
 
-,
   async getExpenses(req: AuthRequest, res: Response) {
     try {
       const userId = req.userId;
@@ -86,35 +85,34 @@ async createExpense(req: AuthRequest, res: Response) {
     }
   },
 
-async updateExpense(req: AuthRequest, res: Response) {
-  try {
-    const { id } = req.params;
-    const { valor, descricao, idCategoria, tipoPeriodo, dataGasto } = req.body;
-    const userId = req.userId;
-    if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
+  async updateExpense(req: AuthRequest, res: Response) {
+    try {
+      const { id } = req.params;
+      const { valor, descricao, idCategoria, tipoPeriodo, dataGasto } = req.body;
+      const userId = req.userId;
+      if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
 
-    const repo = AppDataSource.getRepository(Gasto);
-    const existing = await repo.findOne({ where: { id: Number(id), idUsuario: userId } });
-    if (!existing) return res.status(404).json({ success: false, message: "Gasto não encontrado" });
+      const repo = AppDataSource.getRepository(Gasto);
+      const existing = await repo.findOne({ where: { id: Number(id), idUsuario: userId } });
+      if (!existing) return res.status(404).json({ success: false, message: "Gasto não encontrado" });
 
-    repo.merge(existing, {
-      valor: valor !== undefined ? parseFloat(valor) : existing.valor,
-      descricao: descricao ?? existing.descricao,
-      idCategoria: idCategoria ? Number(idCategoria) : undefined,
-      tipoPeriodo: tipoPeriodo ?? existing.tipoPeriodo,
-      dataGasto: dataGasto ? new Date(dataGasto) : existing.dataGasto,
-    });
-    await repo.save(existing);
+      repo.merge(existing, {
+        valor: valor !== undefined ? parseFloat(valor) : existing.valor,
+        descricao: descricao ?? existing.descricao,
+        idCategoria: idCategoria ? Number(idCategoria) : undefined,
+        tipoPeriodo: tipoPeriodo ?? existing.tipoPeriodo,
+        dataGasto: dataGasto ? new Date(dataGasto) : existing.dataGasto,
+      });
+      await repo.save(existing);
 
-    const gastoFull = await repo.findOne({ where: { id: existing.id }, relations: ["categoria"] });
+      const gastoFull = await repo.findOne({ where: { id: existing.id }, relations: ["categoria"] });
 
-    res.json({ success: true, data: gastoFull, message: "Gasto atualizado com sucesso" });
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).json({ success: false, message: error.message });
-  }
-}
-  ,
+      res.json({ success: true, data: gastoFull, message: "Gasto atualizado com sucesso" });
+    } catch (error: any) {
+      console.error(error);
+      res.status(500).json({ success: false, message: error.message });
+    }
+  },
 
   async deleteExpense(req: AuthRequest, res: Response) {
     try {
@@ -285,31 +283,30 @@ async updateExpense(req: AuthRequest, res: Response) {
   // ======================
   // INVESTIMENTOS
   // ======================
-async createInvestment(req: AuthRequest, res: Response) {
-  try {
-    const { valor, descricao, idTipoInvestimento, dataInvestimento } = req.body;
-    const userId = req.userId;
-    if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
+  async createInvestment(req: AuthRequest, res: Response) {
+    try {
+      const { valor, descricao, idTipoInvestimento, dataInvestimento } = req.body;
+      const userId = req.userId;
+      if (!userId) return res.status(401).json({ success: false, message: "Usuário não autenticado" });
 
-    const repo = AppDataSource.getRepository(Investimento);
-    const investimento = repo.create({
-      idUsuario: userId,
-      valor: parseFloat(valor),
-      descricao,
-      idTipoInvestimento: idTipoInvestimento ? Number(idTipoInvestimento) : undefined,
-      dataInvestimento: dataInvestimento ? new Date(dataInvestimento) : new Date(),
-    });
-    await repo.save(investimento);
+      const repo = AppDataSource.getRepository(Investimento);
+      const investimento = repo.create({
+        idUsuario: userId,
+        valor: parseFloat(valor),
+        descricao,
+        idTipoInvestimento: idTipoInvestimento ? Number(idTipoInvestimento) : undefined,
+        dataInvestimento: dataInvestimento ? new Date(dataInvestimento) : new Date(),
+      });
+      await repo.save(investimento);
 
-    const investimentoFull = await repo.findOne({ where: { id: investimento.id }, relations: ["tipoInvestimento"] });
+      const investimentoFull = await repo.findOne({ where: { id: investimento.id }, relations: ["tipoInvestimento"] });
 
-    res.status(201).json({ success: true, data: investimentoFull, message: "Investimento criado com sucesso" });
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).json({ success: false, message: error.message });
-  }
-}
-  ,
+      res.status(201).json({ success: true, data: investimentoFull, message: "Investimento criado com sucesso" });
+    } catch (error: any) {
+      console.error(error);
+      res.status(500).json({ success: false, message: error.message });
+    }
+  },
 
   async getInvestments(req: AuthRequest, res: Response) {
     try {
@@ -415,8 +412,8 @@ async createInvestment(req: AuthRequest, res: Response) {
         .createQueryBuilder("g")
         .select("SUM(g.valor)", "total")
         .where("g.idUsuario = :userId", { userId })
-        .andWhere(startDate ? "g.dataGasto >= :startDate" : "1=1", { startDate })
-        .andWhere(endDate ? "g.dataGasto <= :endDate" : "1=1", { endDate })
+        .andWhere(startDate ? "g.dataGasto >= :startDate" : "1=1", { startDate: new Date(startDate as string) })
+        .andWhere(endDate ? "g.dataGasto <= :endDate" : "1=1", { endDate: new Date(endDate as string) })
         .getRawOne();
 
       // TOTAL INVESTIMENTOS
@@ -424,8 +421,8 @@ async createInvestment(req: AuthRequest, res: Response) {
         .createQueryBuilder("i")
         .select("SUM(i.valor)", "total")
         .where("i.idUsuario = :userId", { userId })
-        .andWhere(startDate ? "i.dataInvestimento >= :startDate" : "1=1", { startDate })
-        .andWhere(endDate ? "i.dataInvestimento <= :endDate" : "1=1", { endDate })
+        .andWhere(startDate ? "i.dataInvestimento >= :startDate" : "1=1", { startDate: new Date(startDate as string) })
+        .andWhere(endDate ? "i.dataInvestimento <= :endDate" : "1=1", { endDate: new Date(endDate as string) })
         .getRawOne();
 
       // GASTOS POR CATEGORIA
@@ -435,8 +432,8 @@ async createInvestment(req: AuthRequest, res: Response) {
         .addSelect("SUM(g.valor)", "total")
         .leftJoin("g.categoria", "c")
         .where("g.idUsuario = :userId", { userId })
-        .andWhere(startDate ? "g.dataGasto >= :startDate" : "1=1", { startDate })
-        .andWhere(endDate ? "g.dataGasto <= :endDate" : "1=1", { endDate })
+        .andWhere(startDate ? "g.dataGasto >= :startDate" : "1=1", { startDate: new Date(startDate as string) })
+        .andWhere(endDate ? "g.dataGasto <= :endDate" : "1=1", { endDate: new Date(endDate as string) })
         .groupBy("c.nome")
         .getRawMany();
 
@@ -447,8 +444,8 @@ async createInvestment(req: AuthRequest, res: Response) {
         .addSelect("SUM(i.valor)", "total")
         .leftJoin("i.tipoInvestimento", "t")
         .where("i.idUsuario = :userId", { userId })
-        .andWhere(startDate ? "i.dataInvestimento >= :startDate" : "1=1", { startDate })
-        .andWhere(endDate ? "i.dataInvestimento <= :endDate" : "1=1", { endDate })
+        .andWhere(startDate ? "i.dataInvestimento >= :startDate" : "1=1", { startDate: new Date(startDate as string) })
+        .andWhere(endDate ? "i.dataInvestimento <= :endDate" : "1=1", { endDate: new Date(endDate as string) })
         .groupBy("t.nome")
         .getRawMany();
 
