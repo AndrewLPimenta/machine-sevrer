@@ -12,10 +12,9 @@
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node10",
+    "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": false,
-    "ignoreDeprecations": "6.4"
+    "noImplicitAny": false
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
