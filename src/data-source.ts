@@ -30,8 +30,8 @@ export const AppDataSource = new DataSource({
   username: dbUrl.username,
   password: decodeURIComponent(dbUrl.password),
   database: dbUrl.pathname.slice(1),
-  ssl: { rejectUnauthorized: false },
-  extra: { family: 4 },
+  ssl: isProd ? { rejectUnauthorized: false } : false,
+  extra: { family: 4 }, // força IPv4
   synchronize: !isProd,
   logging: !isProd,
   entities: isProd
