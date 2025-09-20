@@ -6,7 +6,12 @@ import { CategoriaGasto } from "../entities/CategoriaGasto";
 import { TipoInvestimento } from "../entities/TipoInvestimento";
 import { Investimento } from "../entities/Investimento";
 
-interface AuthRequest extends Request {
+export interface AuthRequest<
+  P = any,       // params
+  ResBody = any, // response body
+  ReqBody = any, // request body
+  ReqQuery = any // query
+> extends Request<P, ResBody, ReqBody, ReqQuery> {
   userId?: number;
 }
 
