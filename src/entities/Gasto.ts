@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
 import { CategoriaGasto } from "./CategoriaGasto";
 import { Usuario } from "./Usuario";
 
@@ -14,7 +22,7 @@ export class Gasto {
   valor: number;
 
   @Column()
-  descricao: string;
+  descricao: string; // 🚨 Obrigatória
 
   @Column({ nullable: true })
   idCategoria?: number;
@@ -31,11 +39,11 @@ export class Gasto {
   @UpdateDateColumn()
   dataAtualizacao: Date;
 
-  @ManyToOne(() => CategoriaGasto, c => c.gastos, { nullable: true })
+  @ManyToOne(() => CategoriaGasto, (c) => c.gastos, { nullable: true })
   @JoinColumn({ name: "idCategoria" })
   categoria?: CategoriaGasto;
 
-  @ManyToOne(() => Usuario, u => u.gastos, { onDelete: "CASCADE" })
+  @ManyToOne(() => Usuario, (u) => u.gastos, { onDelete: "CASCADE" })
   @JoinColumn({ name: "idUsuario" })
   usuario: Usuario;
 }

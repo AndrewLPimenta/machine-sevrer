@@ -30,8 +30,8 @@ export const AppDataSource = new DataSource({
   username: dbUrl.username,
   password: decodeURIComponent(dbUrl.password),
   database: dbUrl.pathname.slice(1),
-  ssl: { rejectUnauthorized: false },
-  synchronize: !isProd,
+  ssl: isProd ? { rejectUnauthorized: false } : false,
+  synchronize: false, // nunca use synchronize em produção
   logging: !isProd,
   entities: isProd
     ? [__dirname + "/entities/*.js"]
